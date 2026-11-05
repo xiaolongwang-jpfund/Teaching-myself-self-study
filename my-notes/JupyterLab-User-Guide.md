@@ -1,4 +1,6 @@
-# JupyterLab 与 the-craft-of-selfteaching 学习流程
+# JupyterLab User Guide
+
+本指南文件路径：`~/JupyterLab/Teaching-myself-self-study/my-notes/JupyterLab-User-Guide.md`。
 
 这份指南记录如何在本机打开 JupyterLab、阅读和记录学习内容、用 Git 保存版本，并把学习分支上传到 GitHub。命令请在 macOS 的终端中逐条运行；看到错误时先停下来，保留完整错误信息再处理。
 
@@ -19,9 +21,10 @@
 ~/JupyterLab/
 ├── .venv/                          # JupyterLab 使用的独立 Python 环境
 ├── jupyter-first-steps.ipynb       # 工作区自己的入门 Notebook
-├── JupyterLab-使用说明.md           # 本指南
-└── Teaching-myself-self-study/     # Git 仓库：书籍和学习记录
+└── Teaching-myself-self-study/     # Git 仓库：书籍、学习记录和本指南
 ```
+
+本指南在仓库内的相对路径是 `my-notes/JupyterLab-User-Guide.md`。
 
 `~/JupyterLab` 是放置文件和仓库的工作区，本身不是 Git 仓库。真正的 Git 仓库是里面的 `Teaching-myself-self-study` 子文件夹；在终端中应先进入该子文件夹，再运行 Git 命令。
 
@@ -52,6 +55,20 @@ jupyter lab
 3. 如果终端询问 `Shut down this Jupyter server (y/[n])?`，输入 `y` 并按 Return。
 4. 看到终端提示符重新出现，就表示服务已停止；浏览器页面断开是正常的。
 
+### 升级 JupyterLab
+
+本机的 JupyterLab 安装在 `~/JupyterLab/.venv`。升级时先停止正在运行的 JupyterLab，然后在终端依次运行：
+
+```sh
+cd ~/JupyterLab
+source .venv/bin/activate
+python -m pip install --upgrade jupyterlab
+jupyter lab --version
+deactivate
+```
+
+`python -m pip` 会使用当前已启用的虚拟环境来运行 pip（Python 包安装工具），避免升级到系统中的其他 Python 环境。最后显示的版本号可用来确认升级结果；完成后重新按本节“启动”步骤打开 JupyterLab。升级需要联网，并会更新该虚拟环境中的 JupyterLab 包。
+
 ## 3. 阅读与记录学习笔记
 
 ### 打开书籍章节
@@ -78,6 +95,22 @@ Teaching-myself-self-study/
 - 按 `⌘S` 保存当前 Notebook。JupyterLab 也可能自动保存，但重要修改后仍建议手动保存。
 - 若要在章节 Notebook 末尾记一条总结，先选中最后一个单元格，再点工具栏的 `+` 添加单元格；确认单元格类型为 Markdown，再输入笔记并保存。
 - 若误加空单元格，先选中并确认它确实为空，再用 **Edit → Delete Cells** 删除，最后保存。
+
+### 给正文做批注和标记重点
+
+为保持原文内容及排版不被个人标记打乱，尽量不要直接改写、删除或在原文句子中插入自己的文字。阅读时可以在章节 Notebook 的相邻 Markdown 单元格或末尾新增 Markdown 单元格记录笔记；若使用书籍的 Markdown 原文，建议把批注写在 `my-notes/` 下的独立笔记文件中，并注明章节和原文位置。
+
+在 Markdown 笔记里，用明确标签和引用格式区分原文摘录与自己的话。例如：
+
+```markdown
+> **原文摘录：** 在这里放需要回看的原文短句。
+
+**📝 我的批注：** 在这里写自己的解释或疑问。
+
+**⭐ 重点：** 在这里写需要记住的概念。
+```
+
+在 Notebook 中，这些内容会以引用块、粗体标签和符号显示，便于和正文区分。只摘录理解笔记所需的短句；重点概念也可以用自己的话总结，保留原文单元格不变。
 
 也可以把较长的个人笔记另存为 Markdown 文件，放在仓库的 `my-notes/` 文件夹中。建议使用清楚的英文文件名，例如：
 
@@ -262,13 +295,3 @@ git push -u origin learning
 ### JupyterLab 没有打开或想停止
 
 启动服务的终端不要关闭。需要停止时按本指南第 2 节操作。地址中的 `token=` 是本机访问保护的一部分，不要公开分享。
-
-## 9. 当前学习记录
-
-截至 2026-11-04，Proof of Work 章节的一条学习总结已提交并推送：
-
-- 分支：`learning`
-- 提交：`4cd0c4c Add Proof of Work reading note`
-- 记录文件：`02.proof-of-work.ipynb`
-
-这个状态是当时核对的快照；开始新一轮学习时，先运行 `git status --short --branch` 查看当前状态。
